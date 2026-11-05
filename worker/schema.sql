@@ -638,6 +638,22 @@ CREATE TABLE IF NOT EXISTS telegram_notification_outbox (
   UNIQUE(user_id, channel_id, message_id)
 );
 
+-- 每用户仅保留一个短时回复目标；不保存明文，解绑/重绑撤销旧提示。
+CREATE TABLE IF NOT EXISTS telegram_dm_prompts (
+  user_id INTEGER PRIMARY KEY REFERENCES telegram_notification_users(user_id) ON DELETE CASCADE,
+  telegram_chat_id TEXT NOT NULL,
+  channel_id INTEGER NOT NULL REFERENCES channels(id) ON DELETE CASCADE,
+  prompt_message_id INTEGER NOT NULL,
+  request_message_id INTEGER NOT NULL,
+  expires_at TEXT NOT NULL
+);
+
+CREATE TRIGGER IF NOT EXISTS clear_telegram_prompt_after_rebind
+AFTER UPDATE OF telegram_chat_id ON telegram_notification_users
+BEGIN
+  DELETE FROM telegram_dm_prompts WHERE user_id = NEW.user_id;
+END;
+
 CREATE INDEX IF NOT EXISTS idx_telegram_notification_due ON telegram_notification_outbox(status, next_attempt_at);
 CREATE INDEX IF NOT EXISTS idx_telegram_notification_sender ON telegram_notification_outbox(sender_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_telegram_notification_recipient ON telegram_notification_outbox(user_id, created_at);
@@ -657,6 +673,10 @@ VALUES ('site_icon_url', '');
 
 CREATE INDEX IF NOT EXISTS idx_messages_channel_created
   ON messages(channel_id, id DESC);
+
+-- 会话列表按创建时间取最新存活消息，避免每个房间扫描整段历史。
+CREATE INDEX IF NOT EXISTS idx_messages_channel_live_time
+  ON messages(channel_id, created_at DESC) WHERE deleted_at IS NULL;
 
 CREATE INDEX IF NOT EXISTS idx_messages_sender_created
   ON messages(sender_id, id DESC);

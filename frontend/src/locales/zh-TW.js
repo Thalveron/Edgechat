@@ -1,6 +1,8 @@
 import bridge from './instance-bridge/zh-TW.js';
 import rbac from './rbac/zh-TW.js';
+import verification from './login-verification/zh-TW.js';
 export default {
+  ...verification,
   'maintenance.telegramNotifications': 'TelegramNotifications DO',
   'maintenance.method.telegramNotifications': 'TELEGRAM_NOTIFICATIONS binding + 內部 health 請求',
   ...rbac,
@@ -189,11 +191,15 @@ export default {
   "settings.displayNameHint": "將展示給其他用戶",
   "settings.customBackground": "自定義背景",
   "settings.customBackgroundHint": "CSS 漸變、純色或圖片 URL",
+  "settings.effectsTitle": "視覺效果",
+  "settings.lowEffects": "低特效模式",
+  "settings.lowEffectsHint": "關閉背景光團、玻璃高光和背景模糊。立即生效，僅儲存在目前瀏覽器，不影響聊天功能。",
+  "settings.systemLowEffects": "系統已要求減少動態效果或透明度，目前自動使用低特效模式。",
   "settings.savingProfile": "保存中",
   "settings.saveProfile": "保存資料",
   "settings.securitySection": "安全設置",
   "settings.telegramTitle": "Telegram 訊息通知",
-  "settings.telegramDescription": "關閉 EdgeChat 後，也能收到私訊和群聊 @ 提醒。通知不包含訊息正文。",
+  "settings.telegramDescription": "私訊和群聊 @ 通知僅顯示正文前 8 個字元及站內查看連結。短預覽仍會以明文進入 Telegram，附件不顯示名稱。Bot 的 /chats 私聊傳送功能保留；關閉提醒不影響主動傳送，解除綁定後全部停用。",
   "settings.telegramStatusLoading": "正在讀取",
   "settings.telegramStatusUnavailable": "暫不可用",
   "settings.telegramStatusDisconnected": "未綁定",
@@ -279,6 +285,7 @@ export default {
   "chat.groupSettings": "群設置",
   "chat.loadEarlier": "加載更早",
   "chat.loadingMessages": "加載中...",
+  "chat.refreshFailed": "刷新失敗，正在顯示已儲存的訊息。",
   "chat.noMessages": "暫無消息",
   "chat.addAttachment": "添加附件",
   "chat.fileSelectionFailed": "無法讀取所選文件，請重新選擇。",
@@ -287,6 +294,9 @@ export default {
   "chat.mentionedMe": "有人@我",
   "chat.send": "發送",
   "chat.realtimeNotReady": "實時連接尚未就緒，請稍後重試",
+  "chat.messagePending": "發送中",
+  "chat.messageUnconfirmed": "尚未確認送達",
+  "chat.retryMessage": "重試發送",
   "chat.sessionInvalid": "登錄狀態已失效，請重新登錄。",
   "notifications.unavailable": "通知不可用",
   "notifications.permissionDenied": "權限禁用",

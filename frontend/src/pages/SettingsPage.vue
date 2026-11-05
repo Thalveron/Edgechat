@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import api from '../api.js';
 import store from '../store.js';
 import TelegramNotificationSettings from '../components/settings/TelegramNotificationSettings.vue';
+import VisualEffectsSettings from '../components/settings/VisualEffectsSettings.vue';
 import UiAvatar from '../components/ui/Avatar.vue';
 import LanguageSwitch from '../components/ui/LanguageSwitch.vue';
 import { isCapacitorAndroid, pickNativeFile } from '../capacitor-platform.ts';
@@ -405,6 +406,7 @@ async function changePassword() {
             {{ savingPassword ? t('settings.updatingPassword') : t('settings.updatePassword') }}
           </button>
         </section>
+        <VisualEffectsSettings class="settings-section" />
         <TelegramNotificationSettings class="settings-section" />
       </div>
 
@@ -727,7 +729,7 @@ async function changePassword() {
   border: none;
   border-radius: 12px;
   background: var(--site-button-background, linear-gradient(135deg, rgba(91, 141, 191, 0.85), rgba(69, 121, 186, 0.8)));
-  color: #fff;
+  color: var(--site-on-action, #fff);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -914,7 +916,7 @@ async function changePassword() {
   border: none;
   border-radius: 14px;
   background: var(--site-button-background, linear-gradient(135deg, rgba(91, 141, 191, 0.85), rgba(69, 121, 186, 0.8)));
-  color: #fff;
+  color: var(--site-on-action, #fff);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
